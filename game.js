@@ -156,15 +156,18 @@ $(document).ready(function () {
     var text = $(this).val();
     var text2 = $("#player2Input").val();
     if (text.indexOf("Computer") != -1) {
-      audio.play();
-      alert("You done messed up, AA-ron");
       $("#player1Input").val("");
       $(".warning").removeClass("hidden");
       $(".warning2").addClass("hidden");
-    } else if (text === text2) {
+    } else if (text === text2 && text != "") {
       $("#player1Input").val("");
       $(".warning2").removeClass("hidden");
       $(".warning").addClass("hidden");
+    } else {
+      setTimeout(function () {
+        $(".warning2").addClass("hidden");
+        $(".warning").addClass("hidden");
+      }, 7500);
     }
   });
 });
@@ -173,15 +176,18 @@ $(document).ready(function () {
     var text = $(this).val();
     var text2 = $("#player1Input").val();
     if (text.indexOf("Computer") != -1 && $("#player2name").val() == 1) {
-      audio.play();
-      alert("You done messed up, AA-ron");
       $("#player2Input").val("");
       $(".warning").removeClass("hidden");
       $(".warning2").addClass("hidden");
-    } else if (text === text2) {
+    } else if (text === text2 && text != "") {
       $("#player2Input").val("");
       $(".warning2").removeClass("hidden");
       $(".warning").addClass("hidden");
+    } else {
+      setTimeout(function () {
+        $(".warning2").addClass("hidden");
+        $(".warning").addClass("hidden");
+      }, 7500);
     }
   });
 });
