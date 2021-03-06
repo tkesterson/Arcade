@@ -24,6 +24,46 @@ let whoGoesFirst = () => {
     `Current Player: ${gameState.playerNames[0]} - ${gameState.players[0]}`
   );
 };
+let setPlayerNames = () => {
+  $(".modal2").addClass("open");
+  gameState.playerNames[0] = $("#player1Input").val();
+  gameState.playerNames[1] = $("#player2Input").val();
+  whoGoesFirst();
+  if (gameState.cpuOpponent === true) {
+    computerTurn();
+  }
+};
+let clickTheBoard = (cell) => {
+  // console.log($(this));
+  if (cell.hasClass("occupied") || gameState.playerNames[0] === "Computer") {
+  } else {
+    placeMark(cell);
+  }
+};
+let placeMark = (cell) => {
+  $(".cell").unbind("click");
+  cell.addClass("occupied");
+  const player = gameState.players[0];
+  const boardX = cell.attr("x");
+  const boardY = cell.attr("y");
+
+  cell.text(player);
+  gameState.board[boardX][boardY] = player;
+  let wasThereAWinner = didYouWin(gameState, winnerScreen);
+  let wasThereADraw = didYouDraw();
+  if (wasThereAWinner === true) {
+    return;
+  } else if (wasThereADraw === true) {
+    winnerScreen("Draw");
+    return;
+  } else if (gameState.cpuOpponent === true) {
+    setTimeout(function () {
+      changeActivePlayer();
+    }, 500);
+  } else {
+    changeActivePlayer();
+  }
+};
 let changeActivePlayer = () => {
   [gameState.players[0], gameState.players[1]] = [
     gameState.players[1],
@@ -72,41 +112,6 @@ let winnerScreen = (winner) => {
     $(".winner").text(winner);
   }, 700);
 };
-let placeMark = (cell) => {
-  $(".cell").unbind("click");
-  cell.addClass("occupied");
-  const player = gameState.players[0];
-  const boardX = cell.attr("x");
-  const boardY = cell.attr("y");
-
-  cell.text(player);
-  gameState.board[boardX][boardY] = player;
-  let wasThereAWinner = didYouWin(gameState, winnerScreen);
-  let wasThereADraw = didYouDraw();
-  if (wasThereAWinner === true) {
-    return;
-  } else if (wasThereADraw === true) {
-    winnerScreen("Draw");
-    return;
-  } else if (gameState.cpuOpponent === true) {
-    setTimeout(function () {
-      changeActivePlayer();
-    }, 500);
-  } else {
-    changeActivePlayer();
-  }
-};
-let setPlayerNames = () => {
-  $(".modal2").addClass("open");
-  gameState.playerNames[0] = $("#player1Input").val();
-  gameState.playerNames[1] = $("#player2Input").val();
-  whoGoesFirst();
-
-  if (gameState.cpuOpponent === true) {
-    computerTurn();
-  }
-};
-
 let boardReset = () => {
   gameState.board = [
     [null, null, null],
@@ -124,13 +129,6 @@ let boardReset = () => {
   whoGoesFirst();
   if (gameState.cpuOpponent === true) {
     computerTurn();
-  }
-};
-let clickTheBoard = (cell) => {
-  // console.log($(this));
-  if (cell.hasClass("occupied") || gameState.playerNames[0] === "Computer") {
-  } else {
-    placeMark(cell);
   }
 };
 $(".cell").click(function () {
@@ -157,7 +155,6 @@ $("#player2name").change(() => {
   }
 });
 askForNames();
-
 $(document).ready(function () {
   $("#player1Input").keyup(function () {
     var text = $(this).val();
