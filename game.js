@@ -9,9 +9,6 @@ let gameState = {
   ],
   cpuOpponent: [false],
 };
-let askForNames = () => {
-  $(".modal2").addClass("open");
-};
 let whoGoesFirst = () => {
   const startingPlayer = Math.floor(Math.random() * 2);
   if (startingPlayer === 1) {
@@ -154,7 +151,6 @@ $("#player2name").change(() => {
     gameState.cpuOpponent = false;
   }
 });
-askForNames();
 $(document).ready(function () {
   $("#player1Input").keyup(function () {
     var text = $(this).val();
