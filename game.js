@@ -169,11 +169,17 @@ $(document).ready(function () {
 $(document).ready(function () {
   $("#player2Input").keyup(function () {
     var text = $(this).val();
+    var text2 = $("#player1Input").val();
     if (text.indexOf("Computer") != -1 && $("#player2name").val() == 1) {
       audio.play();
       alert("You done messed up, AA-ron");
       $("#player2Input").val("");
       $(".warning").removeClass("hidden");
+      $(".warning2").addClass("hidden");
+    } else if (text === text2) {
+      $("#player2Input").val("");
+      $(".warning2").removeClass("hidden");
+      $(".warning").addClass("hidden");
     }
   });
 });
